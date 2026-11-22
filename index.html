@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DarDori — порядок на борту</title>
+<meta name="description" content="DarDori — бесплатное приложение для команд яхт: флот, календарь, заказы, роли и уведомления. Android 8+. В активной разработке.">
+<meta name="theme-color" content="#0072FF">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#0072FF;--navy:#0A1E3C;--cyan:#35C4FF;--bg:#F4F8FC;--text:#1B2A41;--muted:#5B6B82;--done:#22C55E;--wip:#FFB020;--r:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Golos Text',-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+h1,h2,h3,.brand{font-family:'Unbounded','Golos Text',sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+section{padding:34px 0}
+h2{font-size:clamp(20px,4.5vw,27px);margin-bottom:6px;color:var(--navy)}
+h3{font-size:16px;margin:18px 0 8px;color:var(--navy)}
+.sub{color:var(--muted);margin-bottom:18px;font-size:15px}
+p{margin-bottom:12px}
+.card{background:#fff;border-radius:var(--r);padding:22px;box-shadow:0 2px 14px rgba(10,30,60,.06)}
+.meta{font-size:13px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;text-decoration:none;padding:14px 22px;border-radius:14px;font-weight:600;font-size:16px;border:none;cursor:pointer}
+.btn-big{width:100%;font-size:17px;padding:16px}
+.btn-soon{background:#8A94A6}
+.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+.btns{display:flex;flex-direction:column;gap:10px;max-width:440px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:rgba(53,196,255,.18);color:var(--cyan)}
+.hero{position:relative;background:linear-gradient(160deg,#0A1E3C 0%,#0E2A52 55%,#0A4FA8 100%);color:#fff;padding:44px 0 72px}
+.hero .meta{color:#B9CCE8}
+.hero h1{font-size:clamp(28px,7vw,44px);margin:14px 0 10px}
+.hero p.lead{font-size:17px;color:#D7E6FA;max-width:560px}
+.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.logo-box{width:46px;height:46px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden}
+.logo-box img{width:100%;height:100%;object-fit:cover}
+.brand{font-size:22px;font-weight:700}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.badge{font-size:13px;font-weight:600;background:rgba(255,255,255,.12);padding:6px 12px;border-radius:999px}
+.wave{position:absolute;bottom:-1px;left:0;width:100%;height:42px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px}
+.feat{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 2px 10px rgba(10,30,60,.06);font-size:14px}
+.feat b{display:block;margin-bottom:2px}
+.shots{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 12px}
+.shot{flex:0 0 225px;scroll-snap-align:start}
+.shot img{width:100%;border-radius:18px;box-shadow:0 4px 18px rgba(10,30,60,.14)}
+.shot figcaption{text-align:center;font-size:13px;color:var(--muted);margin-top:8px}
+.ph{aspect-ratio:9/19.5;border-radius:18px;background:linear-gradient(170deg,#0E2A52,#0072FF);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:14px;font-weight:600}
+.ph span{font-size:34px}
+.ph small{font-weight:400;font-size:11px;color:#B9CCE8;word-break:break-all}
+.flow{counter-reset:step;list-style:none}
+.flow li{counter-increment:step;position:relative;padding:0 0 18px 48px}
+.flow li::before{content:counter(step);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.rm{list-style:none;margin-left:8px}
+.rm li{position:relative;padding:8px 0 8px 22px;border-left:2px dashed #C9D6E8}
+.rm li::before{content:'';position:absolute;left:-7px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--blue);border:2px solid #fff}
+.rm small{display:block;color:var(--muted);font-size:13px}
+.st{display:inline-block;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;margin-right:8px;vertical-align:middle}
+.st.done{background:var(--done);color:#fff}
+.st.wip{background:var(--wip);color:#3A2A00}
+.st.soon{background:#E2E8F0;color:#5B6B82}
+.launch{border-left:4px solid var(--blue)}
+.steps{padding-left:22px}
+.steps li{margin-bottom:12px}
+.warn{background:#FFF6E5;border-left:4px solid var(--wip);padding:12px 14px;border-radius:10px;margin:12px 0;font-size:14px}
+.tip{background:#EAF3FF;border-left:4px solid var(--blue);padding:12px 14px;border-radius:10px;margin:12px 0;font-size:14px}
+.check{list-style:none}
+.check li{padding:6px 0 6px 28px;position:relative}
+.check li::before{content:'✅';position:absolute;left:0}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:12px;word-break:break-all;background:#EEF3F9;padding:8px 10px;border-radius:8px;margin:8px 0}
+.perm{display:inline-block;font-size:13px;background:#EEF3F9;padding:5px 12px;border-radius:999px;margin:3px 4px 3px 0}
+details{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(10,30,60,.05)}
+summary{font-weight:600;cursor:pointer}
+details p{margin:10px 0 0;color:var(--muted);font-size:14px}
+.support{background:var(--navy);color:#fff;border-radius:var(--r);padding:26px}
+.support h2{color:#fff}
+.support p{color:#D7E6FA}
+.qr-tile{background:#fff;padding:10px;border-radius:14px;display:inline-block;margin:14px 0}
+.qr-tile img{width:180px;height:180px;display:block}
+.support small{color:#8FA6C8;font-size:12px;display:block;margin-top:12px}
+.note{font-size:12px;color:var(--muted);margin-top:6px}
+footer{padding:30px 0 44px;text-align:center;color:var(--muted);font-size:13px}
+footer .tag{font-family:'Unbounded',sans-serif;color:var(--navy);font-size:15px;margin-bottom:10px}
+footer a{color:var(--blue);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- ══════════ ШАПКА ══════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="logo-row">
+      <span class="logo-box">
+        <img src="assets/logo.png" alt="" style="display:none"
+             onload="this.style.display='block';this.nextElementSibling.style.display='none'" onerror="this.remove()">
+        <span>⛵</span>
+      </span>
+      <span class="brand">DarDori</span>
+    </div>
+    <span class="chip">В активной разработке · ранний доступ</span>
+    <h1>Порядок на борту.</h1>
+    <p class="lead">Вся команда яхты — в одном приложении: флот, календарь занятости, заказы, роли и уведомления. Чтобы в высокий сезон ничего не терялось.</p>
+    <div class="badges">
+      <span class="badge">Android 8.0+</span>
+      <span class="badge">Бесплатно</span>
+      <span class="badge">Без платежей внутри</span>
+    </div>
+    <div class="btns">
+      <a id="downloadBtn" class="btn btn-big" href="#">Проверяем релиз…</a>
+      <div id="releaseMeta" class="meta"></div>
+      <noscript><p class="meta">Включите JavaScript или скачайте APK в разделе Releases на GitHub.</p></noscript>
+      <a class="btn ghost" href="#roadmap" style="background:transparent;color:#fff;border-color:#35C4FF">Что уже готово ↓</a>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#F4F8FC"/></svg>
+</header>
+
+<main class="wrap">
+
+<!-- ══════════ О ПРОЕКТЕ ══════════ -->
+<section id="about">
+  <h2>Что такое DarDori</h2>
+  <p class="sub">Инструмент для команды яхты, а не маркетплейс для клиентов.</p>
+  <p>Клиент звонит вам — вы открываете календарь, видите всю картину занятости яхты и прямо во время разговора составляете заявку. Приложение подскажет рекомендательную цену с учётом сезона, дня недели, времени, длительности прогулки и числа гостей. Вся команда мгновенно узнаёт о новой заявке, а после подтверждения брони приложение само напомнит о заказе за день, за 3 часа, в момент начала и окончания прогулки. Исполненные заказы уходят в историю, из которой строятся отчёты.</p>
+  <p>Судовладелец, капитан, помощник капитана и брокер — каждый видит то, что нужно его роли. Подходит для любого плавсредства: от резиновой лодки до чартерной яхты.</p>
+  <p><b>Приложение бесплатное и носит информационный характер: никаких платежей и финансовых операций внутри нет.</b> Расчёты с клиентом происходят вне приложения, как и раньше.</p>
+  <div class="grid">
+    <div class="feat"><b>⚓ Флот</b>Карточки яхт, фото с обработкой, локации и категории</div>
+    <div class="feat"><b>📅 Календарь</b>Занятость яхты без двойных броней</div>
+    <div class="feat"><b>📋 Заказы</b>Заявка → бронь → исполнение → история</div>
+    <div class="feat"><b>💡 Цена</b>Рекомендательный расчёт по множеству факторов</div>
+    <div class="feat"><b>🔔 Уведомления</b>Вся команда в курсе на каждом этапе</div>
+    <div class="feat"><b>👥 Роли</b>Судовладелец, капитан, помощник, брокер</div>
+    <div class="feat"><b>✉️ Приглашения</b>QR, мессенджеры, email, сообщество</div>
+    <div class="feat"><b>📊 Отчёты</b>Учёт прогулок и аналитика за период</div>
+    <div class="feat"><b>🔐 152-ФЗ</b>Анонимизация и защита персональных данных</div>
+  </div>
+  <p class="note">Часть разделов в разработке — актуальный статус смотрите в шкале ниже.</p>
+</section>
+
+<!-- ══════════ СКРИНШОТЫ ══════════
+     КАК ЗАМЕНИТЬ ЗАГЛУШКИ: просто загрузите PNG-файлы с указанными именами
+     в папку assets/ репозитория — картинки появятся САМИ, код править не нужно. -->
+<section id="shots">
+  <h2>Как выглядит</h2>
+  <p class="sub">Листайте вбок →</p>
+  <div class="shots">
+    <figure class="shot">
+      <div class="ph"><span>📱</span>Флот<small>assets/screen-fleet.png</small></div>
+      <img src="assets/screen-fleet.png" alt="Флот" loading="lazy" style="display:none"
+           onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">
+      <figcaption>Флот</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="ph"><span>📱</span>Карточка яхты<small>assets/screen-yacht.png</small></div>
+      <img src="assets/screen-yacht.png" alt="Карточка яхты" loading="lazy" style="display:none"
+           onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">
+      <figcaption>Карточка яхты</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="ph"><span>📱</span>Команда<small>assets/screen-team.png</small></div>
+      <img src="assets/screen-team.png" alt="Команда" loading="lazy" style="display:none"
+           onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">
+      <figcaption>Команда и роли</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="ph"><span>📱</span>Приглашение<small>assets/screen-qr.png</small></div>
+      <img src="assets/screen-qr.png" alt="QR-приглашение" loading="lazy" style="display:none"
+           onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">
+      <figcaption>QR-приглашение</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="ph"><span>📱</span>Профиль<small>assets/screen-profile.png</small></div>
+      <img src="assets/screen-profile.png" alt="Профиль" loading="lazy" style="display:none"
+           onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">
+      <figcaption>Профиль</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="ph"><span>📱</span>Регистрация<small>assets/screen-register.png</small></div>
+      <img src="assets/screen-register.png" alt="Регистрация" loading="lazy" style="display:none"
+           onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">
+      <figcaption>Согласия 152-ФЗ</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ СЦЕНАРИЙ ══════════ -->
+<section id="flow">
+  <h2>От звонка до отчёта</h2>
+  <p class="sub">Сценарий полного цикла. Разделы заказов и календаря — в разработке, статус в шкале ниже.</p>
+  <ol class="flow">
+    <li><b>Клиент звонит.</b> Вы открываете календарь и видите всю занятость яхты.</li>
+    <li><b>Заявка на лету.</b> Договариваетесь о прогулке и параллельно составляете заявку.</li>
+    <li><b>Умная цена.</b> Приложение формирует рекомендацию: сезон, день недели, время суток, часы, гости, удалённость брони. Решаете вы.</li>
+    <li><b>Команда в курсе.</b> Все участники получают уведомление о новой заявке.</li>
+    <li><b>Бронь.</b> Клиент оплатил (вне приложения) — вы ставите галочку «Бронь», все исполнители оповещены.</li>
+    <li><b>До конца.</b> Напоминания за день, за 3 часа, старт, финиш → история → отчёты.</li>
+  </ol>
+</section>
+
+<!-- ══════════ ШКАЛА РАЗРАБОТКИ ══════════
+     КАК ОБНОВЛЯТЬ: поменяйте класс и текст чипа (st done / st wip / st soon)
+     и дату «Обновлено». Счётчик наверху пересчитается САМ. -->
+<section id="roadmap">
+  <h2>Прогресс разработки</h2>
+  <p class="sub"><span id="rmCount"></span> · Обновлено: 22.11.2026</p>
+  <div class="card">
+    <h3>Внутри приложения</h3>
+    <ul class="rm" id="rmApp">
+      <li><span class="st done">Готово</span>Аутентификация и профиль<small>Вход по email, профиль, согласия 152-ФЗ</small></li>
+      <li><span class="st done">Готово</span>Раздел «Яхта» (флот)<small>Карточки, фото, локации, категории</small></li>
+      <li><span class="st wip">В работе</span>Раздел «Команда»<small>Роли, приглашения, QR-коды</small></li>
+      <li><span class="st soon">Скоро</span>Календарь занятости<small>Вся загрузка яхты на одном экране</small></li>
+      <li><span class="st soon">Скоро</span>Заказы<small>Заявка → бронь → исполнение → история</small></li>
+      <li><span class="st soon">Скоро</span>Управление ценой<small>Рекомендательный расчёт по факторам</small></li>
+      <li><span class="st soon">Скоро</span>Уведомления в приложении<small>Центр событий команды</small></li>
+      <li><span class="st soon">Скоро</span>Push-уведомления<small>За день, за 3 часа, старт, финиш</small></li>
+      <li><span class="st soon">Скоро</span>Отчёты и история<small>Учёт прогулок и аналитика за период</small></li>
+      <li><span class="st soon">Скоро</span>Настройки приложения<small>Тема, язык, управление аккаунтом</small></li>
+      <li><span class="st soon">Скоро</span>Юридические документы<small>Политика, оферта, версии и согласия</small></li>
+      <li><span class="st soon">Скоро</span>Сообщество и поиск кандидатов<small>Внутреннее сообщество профессионалов</small></li>
+    </ul>
+    <h3>Инфраструктура</h3>
+    <ul class="rm">
+      <li><span class="st soon">Скоро</span>Перенос базы данных на российский сервер</li>
+    </ul>
+    <h3>Официальный запуск</h3>
+    <div class="card launch" style="box-shadow:none;background:#EAF3FF">
+      🚀 <b>Ориентир: 15 апреля 2027</b>
+      <small style="display:block;color:var(--muted)">Дата предварительная и может сдвинуться. Следите за шкалой и каналом.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ УСТАНОВКА ══════════ -->
+<section id="install">
+  <h2>Установка на Android</h2>
+  <p class="sub">Требуется Android 8.0 или новее. Интернет для регистрации.</p>
+  <div class="card">
+    <ol class="steps">
+      <li>Нажмите <b>«Скачать для Android»</b> и дождитесь загрузки файла <b>dardori.apk</b>.</li>
+      <li>Откройте скачанный файл (через уведомление о загрузке или папку «Загрузки»).</li>
+      <li>Android спросит разрешение <b>«Установка из неизвестных источников»</b> для браузера — нажмите «Настройки» и включите переключатель.
+        <div class="warn">Это стандартный механизм Android для любых приложений вне магазинов. Разрешение выдаётся только этому браузеру — после установки его можно выключить обратно.</div></li>
+      <li>Если появится предупреждение <b>Play Защиты</b> «Неизвестное приложение» — нажмите <b>«Подробнее» → «Всё равно установить»</b>.
+        <div class="warn">Play Protect показывает это предупреждение для всех приложений не из Google Play. Само по себе оно не означает, что с файлом что-то не так.</div></li>
+      <li>Нажмите <b>«Установить»</b>, затем <b>«Открыть»</b>.</li>
+      <li>Зарегистрируйтесь по email (придёт код подтверждения) и примите условия использования.</li>
+      <li>Чтобы войти в команду яхты: отсканируйте QR-код приглашения от судовладельца или примите приглашение внутри приложения.</li>
+    </ol>
+    <div class="tip">Обновления устанавливаются поверх, с этой же страницы — все данные сохраняются.</div>
+  </div>
+</section>
+
+<!-- ══════════ ДОВЕРИЕ ══════════ -->
+<section id="trust">
+  <h2>Почему установке можно доверять</h2>
+  <div class="card">
+    <ul class="check">
+      <li><b>Приложение подписано цифровой подписью разработчика.</b> Android проверяет её при каждом обновлении — подменить файл обновлением невозможно.</li>
+      <li><b>Контрольная сумма файла опубликована</b> — можно сверить, что скачан именно наш файл:</li>
+    </ul>
+    <div class="mono" id="shaLine">SHA-256: появится с первым релизом</div>
+    <ul class="check">
+      <li><b>Проверка антивирусами VirusTotal</b> — <span id="vtLine">отчёт появится после проверки первого APK</span>.
+        <!-- КОГДА ПРОВЕРИТЕ APK НА virustotal.com: замените текст выше на ссылку:
+             <a href="ССЫЛКА_НА_ОТЧЁТ">отчёт проверки</a> --></li>
+      <li><b>Минимум разрешений:</b>
+        <span class="perm">Интернет</span><span class="perm">Камера (QR и фото)</span><span class="perm">Уведомления</span><span class="perm">Галерея (фото яхт)</span><br>
+        Приложению не нужны ваши SMS, контакты, звонки и геолокация в фоне.</li>
+      <li><b>Персональные данные защищены по 152-ФЗ:</b> согласия, ролевой доступ, анонимизация, маскирование данных в логах. <a href="privacy.html">Политика конфиденциальности</a>.</li>
+      <li><b>Мы никогда не просим денег.</b> Приложение бесплатное, платежей внутри нет. Если кто-то от имени DarDori просит оплату — это мошенники.</li>
+      <li><b>Скачивайте только с этой страницы.</b> Других официальных источников APK пока нет.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq">
+  <h2>Частые вопросы</h2>
+  <details><summary>Почему не в Google Play?</summary><p>Мы ориентированы на российское яхтенное сообщество; публикация в RuStore планируется. APK — стандартный формат установки Android, миллионы приложений распространяются так.</p></details>
+  <details><summary>Это точно бесплатно?</summary><p>Да. Приложение информационное, без платежей. Поддержать разработчика можно добровольно — все функции остаются бесплатными для всех.</p></details>
+  <details><summary>А iPhone?</summary><p>iOS-версия в планах. Пока Android 8.0+.</p></details>
+  <details><summary>Как приходят обновления?</summary><p>С этой же страницы, устанавливаются поверх старого приложения — данные сохраняются. Анонсы — в канале MAX.</p></details>
+  <details><summary>Кто вы?</summary><p>DarDori — независимый проект сообщества яхтенного туризма России, который разрабатывает один человек. Пишите: <a class="email-link" href="#">почта</a>.</p></details>
+</section>
+
+<!-- ══════════ ПОДДЕРЖКА ══════════ -->
+<section id="support">
+  <div class="support">
+    <h2>Поддержать разработку</h2>
+    <p>DarDori разрабатывает один человек. Бесплатно, в свободное время, для яхтенного сообщества России. Если приложение сэкономило вашей команде время и нервы — вы можете поддержать разработку. Это добровольно: все функции останутся бесплатными для всех.</p>
+    <div class="qr-tile">
+      <img alt="QR-код для поддержки проекта" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEIAQMAAACZOPi8AAAABlBMVEUKHjz///9hb9JBAAABGUlEQVR42u1ZQQ7DMAiz9v8/MyVgQ9ZD73Oo1KZRerHANhTxFrgnvE8gYz3X+/om3/ZufPAW/3QCBA154YTSE4+dHQIBRCd3bfHgPWvm4hGkj3PXlj+ikNh06swf1JfzstUXKUqlRGfHDkv+SLLQKkgmnvXyLBMqsC0e5M+hMeXO/PgD5I8BT7tURzwQTSShbEkiceTTLpg2Y1wb6m3zp/rd8MVj2A10YsiGWPoxLtT1N7Ea8mllQotNN7yu/pT97PBihY0nn2oQBKUJXPGACkQ1M8By7m9/6MRUb8kZVTTg0NBUX06lpYEPYzwA9LyjDVnAGg/lBOZU2RoPYDS2VTe+8/WjjzPmU3lSaJaK/pdr6z/u//174hFf+Xk4tAfZHBgAAAAASUVORK5CYII=">
+    </div>
+    <div class="btns">
+      <a class="btn" href="https://t.tb.ru/pm_short/obYTK5uPkO" target="_blank" rel="noopener">💙 Поддержать по ссылке</a>
+    </div>
+    <small>Поддержка — добровольное пожертвование на развитие проекта, не оплата услуг и не даёт дополнительных прав. Ежемесячный отчёт о полученных средствах публикуется в канале проекта.</small>
+  </div>
+</section>
+
+<!-- ══════════ КОНТАКТЫ ══════════ -->
+<section id="contacts">
+  <h2>Каналы и контакты</h2>
+  <p class="sub">Дневник разработки, новости яхтенного туризма России, анонсы релизов.</p>
+  <div class="btns">
+    <a class="btn" href="https://max.ru/channel_dardori" target="_blank" rel="noopener">📣 Канал в MAX — основной</a>
+    <a class="btn ghost" href="https://t.me/dardori_app" target="_blank" rel="noopener">✈️ Мы также в Telegram</a>
+    <p class="note">Telegram в России может потребовать VPN. Основной канал — в MAX.</p>
+    <a class="btn ghost" id="presLink" href="files/dardori-presentation.pdf">📄 Презентация проекта <span id="presChip" class="st soon">скоро</span></a>
+    <p style="margin-top:14px">Почта: <a class="email-link" href="#">почта</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="tag">Одно море. Много историй.</div>
+    <p>© 2026 DarDori · независимый разработчик · <a href="privacy.html">Политика конфиденциальности</a> · <a id="releasesLink" href="#">Релизы на GitHub</a></p>
+    <p class="meta">Сообщество профессионалов яхтенного туризма России</p>
+  </div>
+</footer>
+
+<script>
+/* ═══ НАСТРОЙКИ: меняйте только здесь ═══ */
+const EMAIL_USER = 'dardoricompany';   // ← часть почты до @
+const EMAIL_DOMAIN = 'gmail.com';      // ← часть почты после @
+
+/* ═══ Автоопределение адреса GitHub (работает при любом имени аккаунта/репозитория) ═══ */
+const host = location.hostname;
+const GH_USER = host.endsWith('.github.io') ? host.split('.')[0] : 'dardori';
+const seg = location.pathname.split('/').filter(Boolean)[0];
+const GH_REPO = (seg && !seg.includes('.')) ? seg : GH_USER + '.github.io';
+const REPO_URL = 'https://github.com/' + GH_USER + '/' + GH_REPO;
+const APK_URL = REPO_URL + '/releases/latest/download/dardori.apk';
+document.getElementById('releasesLink').href = REPO_URL + '/releases';
+
+/* ═══ Почта собирается скриптом — спамеры не найдут её в HTML ═══ */
+const email = EMAIL_USER + '@' + EMAIL_DOMAIN;
+document.querySelectorAll('.email-link').forEach(a => { a.href = 'mailto:' + email; a.textContent = email; });
+
+/* ═══ Кнопка скачивания: сама активируется после первого релиза ═══ */
+const btn = document.getElementById('downloadBtn');
+const meta = document.getElementById('releaseMeta');
+fetch('https://api.github.com/repos/' + GH_USER + '/' + GH_REPO + '/releases/latest')
+  .then(r => {
+    if (r.status === 404) {
+      btn.textContent = 'Первый релиз скоро';
+      btn.classList.add('btn-soon');
+      btn.href = 'https://max.ru/channel_dardori';
+      meta.textContent = 'Следите за анонсом в канале MAX';
+      return null;
+    }
+    if (!r.ok) throw 0;
+    return r.json();
+  })
+  .then(d => {
+    if (!d) return;
+    const a = (d.assets || []).find(x => x.name === 'dardori.apk') || (d.assets || []).find(x => x.name.endsWith('.apk'));
+    btn.textContent = 'Скачать для Android';
+    btn.href = APK_URL;
+    const m = ['Версия ' + d.tag_name];
+    if (a) { m.push((a.size / 1048576).toFixed(1) + ' МБ'); m.push('скачано ' + a.download_count + ' раз'); }
+    meta.textContent = m.join(' · ');
+    const sha = (d.body || '').match(/SHA-?256[:\s]+([a-f0-9]{64})/i);
+    if (sha) document.getElementById('shaLine').textContent = 'SHA-256: ' + sha[1];
+  })
+  .catch(() => {
+    btn.textContent = 'Скачать для Android';
+    btn.href = APK_URL;
+    meta.textContent = 'Файл — в разделе Releases на GitHub';
+  });
+
+/* ═══ Ссылка на презентацию: активируется, когда загрузите PDF в files/ ═══ */
+let presReady = false;
+const presLink = document.getElementById('presLink');
+fetch('files/dardori-presentation.pdf', { method: 'HEAD' })
+  .then(r => { if (r.ok) { presReady = true; document.getElementById('presChip').style.display = 'none'; } })
+  .catch(() => {});
+presLink.addEventListener('click', e => {
+  if (!presReady) { e.preventDefault(); alert('Презентация готовится и скоро появится здесь.'); }
+});
+
+/* ═══ Счётчик шкалы: пересчитывается сам при смене чипов ═══ */
+const app = document.getElementById('rmApp');
+const done = app.querySelectorAll('.st.done').length;
+const wip = app.querySelectorAll('.st.wip').length;
+const total = app.querySelectorAll('li').length;
+document.getElementById('rmCount').textContent = 'Готово ' + done + ' из ' + total + ' разделов · в работе ' + wip;
+</script>
+</body>
+</html>
