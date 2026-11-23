@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  DarDori — презентация проекта · 16 слайдов · 1080×1920 (9:16) · PDF-ready
+  ═══════════════════════════════════════════════════════════════════
+  КАК ПОЛУЧИТЬ PDF (4 шага):
+  1. Сохрани этот файл как presentation.html и загрузи в КОРЕНЬ репозитория
+     dardori.github.io (Add file → Upload files → Commit changes).
+  2. Открой https://dardori.github.io/presentation.html в Chrome.
+     Скриншоты подтянутся из assets/ автоматически, QR-коды уже вшиты.
+  3. Нажми «Скачать PDF» на панели сверху (или Ctrl+P) и выстави:
+     принтер «Сохранить как PDF» · поля «Нет» · масштаб 100% ·
+     ✅ Фоновая графика · колонтитулы ВЫКЛ.
+  4. Сохрани как dardori-presentation.pdf и загрузи в папку files/
+     репозитория — кнопка «Презентация проекта» на сайте активируется сама.
+  ═══════════════════════════════════════════════════════════════════
+-->
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DarDori — презентация проекта</title>
+<meta name="theme-color" content="#0A1E3C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0072FF;--blue2:#0A4FA8;--navy:#0A1E3C;--navy2:#0E2A52;--indigo:#123B7A;
+  --cyan:#35C4FF;--teal:#0FB5C9;--bg:#F4F8FC;--foam:#EAF3FF;--white:#FFFFFF;
+  --ink:#1B2A41;--muted:#5B6B82;--line:#C9D6E8;--cardline:#E3ECF7;
+  --done:#22C55E;--wip:#FFB020;--soon:#8A94A6;--coral:#FF4D6D;--gold:#FFC24B;
+  --s:1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Golos Text',-apple-system,'Segoe UI',Roboto,sans-serif;background:#061224;color:var(--ink);padding-top:78px}
+body::-webkit-scrollbar{width:12px}
+body::-webkit-scrollbar-track{background:#0E2A52}
+body::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--blue),var(--cyan));border-radius:8px;border:2px solid #0E2A52}
+body::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--cyan),var(--blue))}
+svg.ic{width:44px;height:44px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ── Экранные элементы (в печать не попадают) ── */
+#pbar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:60}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(6,18,36,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(53,196,255,.25);color:#EAF3FF}
+.toolbar .tbrand{font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;display:flex;gap:10px;align-items:center;white-space:nowrap}
+.toolbar select{background:#0E2A52;color:#EAF3FF;border:1px solid rgba(53,196,255,.35);border-radius:10px;padding:9px 12px;font-size:14px;font-family:inherit;max-width:360px;cursor:pointer}
+.toolbar button{background:linear-gradient(120deg,var(--blue),var(--cyan));color:#fff;border:none;border-radius:10px;padding:10px 18px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer;white-space:nowrap;box-shadow:0 6px 18px rgba(0,114,255,.4)}
+.toolbar button:hover{filter:brightness(1.1)}
+.toolbar button:disabled{opacity:.6;cursor:wait}
+.toolbar .hint{font-size:12px;color:#8FA6C8;margin-left:auto;text-align:right;line-height:1.4}
+@media (max-width:1100px){.toolbar .hint{display:none}}
+@media (max-width:640px){.toolbar{flex-wrap:wrap}.toolbar select{flex:1;max-width:none}}
+
+/* ── Каркас слайдов ── */
+.deck{position:relative}
+.shell{width:calc(1080px*var(--s));height:calc(1920px*var(--s));margin:30px auto;position:relative;scroll-margin-top:96px;box-shadow:0 34px 90px rgba(0,0,0,.55)}
+.slide{width:1080px;height:1920px;transform:scale(var(--s));transform-origin:top left;position:relative;overflow:hidden;padding:64px;display:flex;flex-direction:column;background:var(--bg);color:var(--ink)}
+@media screen{
+  .shell,.slide{border-radius:22px}
+  .js .shell{opacity:0;transform:translateY(46px);transition:opacity .7s ease,transform .7s ease}
+  .js .shell.in{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.js .shell{opacity:1;transform:none;transition:none}}
+.slide.dark{background:radial-gradient(1200px 800px at 88% -12%,rgba(53,196,255,.22),transparent 60%),radial-gradient(1100px 760px at -12% 112%,rgba(0,114,255,.34),transparent 55%),linear-gradient(165deg,#0A1E3C 0%,#0E2A52 55%,#0A3D7A 100%);color:#fff}
+.slide.dark::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+.slide.storm{background:radial-gradient(1100px 760px at 90% -10%,rgba(255,77,109,.20),transparent 58%),radial-gradient(1000px 700px at -10% 110%,rgba(0,114,255,.30),transparent 55%),linear-gradient(165deg,#0A1E3C 0%,#131F3C 55%,#0E2A52 100%)}
+.slide.storm::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.06;background:repeating-linear-gradient(115deg,transparent 0 46px,#FF4D6D 46px 48px)}
+.slide.horizon{background:radial-gradient(900px 620px at 50% 108%,rgba(53,196,255,.4),transparent 62%),radial-gradient(700px 460px at 50% 104%,rgba(255,194,75,.22),transparent 55%),linear-gradient(180deg,#0A1E3C 0%,#0E2A52 58%,#0A4FA8 100%)}
+
+/* ── Шапка / подвал слайда ── */
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:38px;position:relative;z-index:2}
+.brandrow{display:flex;gap:16px;align-items:center}
+.logotile{width:64px;height:64px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;box-shadow:0 8px 22px rgba(4,16,38,.28);font-size:34px;flex:none}
+.logotile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wordmark{font-family:'Unbounded',sans-serif;font-weight:700;font-size:30px;letter-spacing:.02em;color:var(--navy)}
+.dark .wordmark{color:#fff}
+.foot{position:absolute;left:64px;right:64px;bottom:42px;display:flex;justify-content:space-between;align-items:center;font-size:24px;color:var(--muted);z-index:2}
+.dark .foot{color:#7E97BC}
+.foot .fbrand{display:flex;align-items:center;gap:12px;font-weight:600}
+.foot .fbrand svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.foot .fnum{font-family:'Unbounded',sans-serif;font-weight:500;font-size:22px}
+
+/* ── Типографика ── */
+.kicker{font-size:25px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);position:relative;z-index:2}
+.dark .kicker{color:var(--cyan)}
+.h1{font-family:'Unbounded',sans-serif;font-weight:900;font-size:82px;line-height:1.08;letter-spacing:-.01em;margin:18px 0 26px;position:relative;z-index:2}
+.h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:62px;line-height:1.13;margin:14px 0 24px;color:var(--navy);position:relative;z-index:2}
+.dark .h2{color:#fff}
+.lead{font-size:40px;line-height:1.42;position:relative;z-index:2}
+.dark .lead{color:#D7E6FA}
+.body{font-size:36px;line-height:1.46;position:relative;z-index:2}
+.small{font-size:28px;line-height:1.42;color:var(--muted);position:relative;z-index:2}
+.dark .small{color:#9FB6D8}
+.cy{color:var(--cyan)}
+.grad{background:linear-gradient(110deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ── Чипы статусов ── */
+.chip{display:inline-flex;align-items:center;gap:12px;font-size:24px;font-weight:700;padding:10px 24px;border-radius:999px;white-space:nowrap}
+.chip::before{content:'';width:14px;height:14px;border-radius:50%;background:currentColor}
+.chip.beta{background:rgba(53,196,255,.14);color:var(--cyan);border:2px solid rgba(53,196,255,.4)}
+.chip.done{background:rgba(34,197,94,.12);color:#16A34A;border:2px solid rgba(34,197,94,.35)}
+.dark .chip.done{color:#4ADE80}
+.chip.wip{background:rgba(255,176,32,.14);color:#B45309;border:2px solid rgba(255,176,32,.4)}
+.dark .chip.wip{color:var(--gold)}
+.chip.soon{background:rgba(138,148,166,.14);color:#5B6B82;border:2px solid rgba(138,148,166,.35)}
+.dark .chip.soon{color:#AEBACC}
+
+/* ── Компоненты ── */
+.card{background:#fff;border-radius:28px;padding:32px;box-shadow:0 10px 30px rgba(10,30,60,.08);border:1px solid var(--cardline);position:relative;z-index:2}
+.dark .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);box-shadow:none}
+.icbox{width:84px;height:84px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:var(--foam);color:var(--blue);flex:none}
+.icbox.coral{background:#FFE9EE;color:var(--coral)}
+.icbox.amber{background:#FFF3DC;color:#D97706}
+.icbox.green{background:#E4F8EC;color:#16A34A}
+.icbox.teal{background:#DFF6F9;color:var(--teal)}
+.icbox.gold{background:#FFF6E0;color:#B45309}
+.band{background:linear-gradient(120deg,var(--blue),var(--cyan));color:#fff;border-radius:28px;padding:34px 38px;font-size:38px;font-weight:600;line-height:1.32;box-shadow:0 18px 44px rgba(0,114,255,.35);position:relative;z-index:2}
+.badges{display:flex;flex-wrap:wrap;gap:14px;position:relative;z-index:2}
+.badge{font-size:27px;font-weight:600;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#EAF3FF;padding:12px 26px;border-radius:999px}
+.phone{width:430px;background:var(--navy);border-radius:48px;padding:14px;box-shadow:0 40px 90px rgba(4,16,38,.5),inset 0 0 0 2px rgba(255,255,255,.09);position:relative;z-index:2;flex:none}
+.phone .screen{position:relative;border-radius:36px;overflow:hidden;aspect-ratio:9/19.5;background:linear-gradient(170deg,#0E2A52,#0072FF)}
+.phone .fb{position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:center;color:#B9CCE8;font-size:25px;text-align:center;padding:20px}
+.phone .fb b{font-size:64px}
+.phone img{position:relative;display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.schemtag{display:inline-flex;align-items:center;gap:10px;font-size:23px;font-weight:600;color:var(--muted);background:#EEF3F9;border:1px dashed var(--line);border-radius:999px;padding:8px 20px}
+.qr-tile{background:#fff;border-radius:28px;padding:22px;display:inline-flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 16px 40px rgba(4,16,38,.35);position:relative;z-index:2}
+.qr-tile img{width:300px;height:300px;image-rendering:pixelated;display:block}
+.qr-tile b{color:var(--navy);font-size:28px}
+.qr-tile span{color:var(--muted);font-size:23px}
+.compass{position:absolute;width:420px;height:420px;color:var(--cyan);opacity:.14;z-index:1;pointer-events:none}
+.wavebottom{position:absolute;left:0;right:0;bottom:0;height:120px;z-index:1;pointer-events:none}
+.wavebottom svg{width:100%;height:100%;display:block}
+
+/* ── Слайд 2: чаты ── */
+.bubble{max-width:820px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:26px;padding:26px 32px;font-size:35px;line-height:1.35;color:#EAF3FF;position:relative;z-index:2}
+.bubble .who{display:block;font-size:24px;color:#8FA6C8;margin-bottom:8px;font-weight:700}
+.bubble.me{margin-left:auto;background:rgba(0,114,255,.30);border-color:rgba(53,196,255,.4)}
+.missed{display:inline-flex;align-items:center;gap:14px;background:rgba(255,77,109,.16);border:2px solid rgba(255,77,109,.5);color:#FFB3C2;font-size:27px;font-weight:700;border-radius:999px;padding:12px 28px;position:relative;z-index:2}
+
+/* ── Слайд 7: маршрут ── */
+.route{position:relative;margin:26px 0 0 26px;padding-left:74px;z-index:2}
+.route::before{content:'';position:absolute;left:26px;top:16px;bottom:26px;border-left:4px dashed rgba(53,196,255,.5)}
+.node{position:relative;padding-bottom:36px}
+.node:last-child{padding-bottom:0}
+.node::before{content:'';position:absolute;left:-56px;top:8px;width:28px;height:28px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 9px rgba(53,196,255,.16)}
+.node.g::before{background:var(--done);box-shadow:0 0 0 9px rgba(34,197,94,.18)}
+.node.y::before{background:var(--gold);box-shadow:0 0 0 9px rgba(255,194,75,.18)}
+.node.b::before{background:var(--blue);box-shadow:0 0 0 9px rgba(0,114,255,.22)}
+.node h4{font-family:'Unbounded',sans-serif;font-size:37px;font-weight:700;color:#fff}
+.node p{font-size:27px;color:#9FB6D8;margin-top:4px}
+
+/* ── Слайд 5: календарь-схема ── */
+.cal{display:grid;grid-template-columns:110px repeat(7,1fr);gap:8px;font-size:23px}
+.cal .h{font-weight:700;color:var(--muted);text-align:center;padding:8px 0}
+.cal .t{color:var(--muted);font-weight:600;display:flex;align-items:center}
+.cal .cell{height:86px;border-radius:14px;background:#EEF3F9;border:1px solid var(--cardline);display:flex;align-items:center;justify-content:center;font-weight:600;color:#9AA9BF;font-size:21px}
+.cal .busy{background:linear-gradient(135deg,#DCEBFF,#C7E0FF);color:var(--blue2);border-color:#B9D6FF}
+.cal .new{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:none;box-shadow:0 10px 24px rgba(0,114,255,.4)}
+.callbar{display:flex;align-items:center;gap:22px;background:#fff;border-radius:24px;padding:24px 30px;border:1px solid var(--cardline);box-shadow:0 12px 30px rgba(10,30,60,.10)}
+.callbar .pulse{width:66px;height:66px;border-radius:50%;background:#E4F8EC;color:#16A34A;display:flex;align-items:center;justify-content:center;flex:none}
+
+/* ── Слайд 6: поток ── */
+.flowarrow{display:flex;justify-content:center;color:var(--cyan);font-size:44px;line-height:1;padding:6px 0;position:relative;z-index:2}
+.rolefan{display:flex;gap:16px;flex-wrap:wrap}
+.rolepill{display:inline-flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--cardline);border-radius:999px;padding:14px 24px;font-size:27px;font-weight:600;box-shadow:0 6px 16px rgba(10,30,60,.07)}
+.rolepill svg{width:30px;height:30px;color:var(--blue)}
+.togglecard{display:flex;align-items:center;gap:24px;background:linear-gradient(120deg,#E4F8EC,#DFF6F9);border:2px solid rgba(34,197,94,.4);border-radius:26px;padding:28px 32px}
+.togglecard .tick{width:74px;height:74px;border-radius:20px;background:var(--done);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+
+/* ── Слайд 8: факторы ── */
+.factor{display:inline-flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--cardline);border-radius:999px;padding:18px 30px;font-size:30px;font-weight:600;box-shadow:0 6px 18px rgba(10,30,60,.06)}
+.factor svg{width:34px;height:34px;color:var(--blue)}
+.pricecard{background:linear-gradient(135deg,var(--navy),var(--blue2));color:#fff;border-radius:30px;padding:36px 42px;display:flex;align-items:center;gap:30px;box-shadow:0 24px 60px rgba(10,30,60,.35)}
+.pricecard .rub{width:96px;height:96px;border-radius:26px;background:rgba(53,196,255,.18);color:var(--cyan);display:flex;align-items:center;justify-content:center;flex:none}
+.pricecard .rub svg{width:52px;height:52px}
+
+/* ── Слайд 9: роли ── */
+.rolecard{display:flex;gap:26px;align-items:center;background:#fff;border-radius:26px;padding:28px 32px;border:1px solid var(--cardline);border-left:10px solid var(--blue);box-shadow:0 8px 24px rgba(10,30,60,.07)}
+.rolecard h4{font-family:'Unbounded',sans-serif;font-size:35px;font-weight:700;color:var(--navy)}
+.rolecard p{font-size:29px;color:var(--muted);margin-top:4px}
+
+/* ── Слайд 12: график ── */
+.bars{display:flex;align-items:flex-end;gap:24px;height:400px;padding:56px 10px 56px}
+.bar{flex:1;border-radius:16px 16px 6px 6px;position:relative}
+.bar b{position:absolute;top:-46px;left:50%;transform:translateX(-50%);font-size:28px;color:var(--navy)}
+.bar span{position:absolute;bottom:-46px;left:50%;transform:translateX(-50%);font-size:25px;color:var(--muted);font-weight:600}
+.sumrow{display:flex;gap:18px;flex-wrap:wrap}
+.sum{flex:1;min-width:200px;background:var(--foam);border-radius:20px;padding:22px 26px;text-align:center}
+.sum b{display:block;font-family:'Unbounded',sans-serif;font-size:42px;color:var(--blue)}
+.sum span{font-size:25px;color:var(--muted)}
+
+/* ── Слайд 14: статус ── */
+.statrow{display:flex;gap:20px;align-items:flex-start;padding:18px 0;border-bottom:1px dashed var(--line)}
+.statrow:last-child{border-bottom:none}
+.statrow .txt{font-size:30px;line-height:1.4}
+.statrow .txt b{color:var(--navy)}
+.launchband{display:flex;align-items:center;gap:24px;background:linear-gradient(120deg,var(--navy),var(--blue2));color:#fff;border-radius:26px;padding:28px 34px;box-shadow:0 18px 44px rgba(10,30,60,.3)}
+.launchband b{font-family:'Unbounded',sans-serif;font-size:34px}
+.launchband span{font-size:25px;color:#B9CCE8;display:block;margin-top:4px}
+
+/* ── Слайд 15: горизонт ── */
+.mile{display:flex;gap:26px;align-items:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:26px;padding:28px 32px;position:relative;z-index:2}
+.mile .n{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:32px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 10px 26px rgba(0,114,255,.45)}
+.mile h4{font-family:'Unbounded',sans-serif;font-size:33px;font-weight:700;color:#fff}
+.mile p{font-size:28px;color:#B9CCE8;margin-top:6px;line-height:1.4}
+
+/* ── Слайд 16 ── */
+.contactrow{display:flex;align-items:center;gap:16px;font-size:29px;color:#D7E6FA;position:relative;z-index:2}
+.contactrow svg{width:34px;height:34px;color:var(--cyan)}
+.signoff{font-family:'Unbounded',sans-serif;font-weight:700;font-size:46px;background:linear-gradient(110deg,var(--cyan),#7FDFFF);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative;z-index:2}
+
+/* ── ПЕЧАТЬ ── */
+@page{size:285.75mm 508mm;margin:0}
+@media print{
+  html,body{width:1080px;margin:0;padding:0;background:#fff}
+  .toolbar,#pbar{display:none!important}
+  .deck{margin:0;padding:0}
+  .shell{width:1080px;height:1920px;margin:0;opacity:1!important;transform:none!important;box-shadow:none;border-radius:0;break-after:page;page-break-after:always;break-inside:avoid}
+  .shell:last-child{break-after:auto;page-break-after:auto}
+  .slide{transform:none;border-radius:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Библиотека символов ── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-anchor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M5 12H2a10 10 0 0 0 20 0h-3"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-order" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16v-5M12 16V8M17 16v-8"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v1M14 20h1M20 20v1"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-call" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-ruble" viewBox="0 0 24 24"><path d="M8 21V4h6a5 5 0 0 1 0 10H6M6 17h8"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-boat" viewBox="0 0 24 24"><path d="M12 3v15M12 3c5 3.5 7 8.5 7 12h-7M12 7c-3.5 2.5-5 6-5 8h5M3 18h18l-2 4H5z"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 17c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 8"/><path d="M100 4v18M100 178v18M4 100h18M178 100h18" stroke="currentColor" stroke-width="3"/><polygon points="100,26 112,100 100,174 88,100" fill="currentColor" opacity=".45"/><polygon points="100,26 112,100 100,100" fill="currentColor"/><circle cx="100" cy="100" r="8" fill="currentColor"/></symbol>
+    <symbol id="i-waveshape" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"/></symbol>
+  </defs>
+</svg>
+
+<div id="pbar"></div>
+<div class="toolbar">
+  <span class="tbrand">⛵ DarDori · Презентация</span>
+  <select id="jump" aria-label="Перейти к слайду"></select>
+  <button id="printBtn" type="button">⬇ Скачать PDF</button>
+  <span class="hint">Печать: «Сохранить как PDF» · поля «Нет» · масштаб 100% · ✅ Фоновая графика · колонтитулы выкл.<br>Листай колесом или стрелками ← → · 16 слайдов · 1080×1920</span>
+</div>
+
+<main class="deck">
+
+<!-- ═══ СЛАЙД 1 · ТИТУЛ ═══ -->
+<div class="shell" data-title="Титул">
+  <section class="slide dark">
+    <svg class="compass" style="top:120px;right:-90px"><use href="#i-compass"/></svg>
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip beta">Закрытое тестирование</span>
+    </div>
+    <div style="max-width:520px;position:relative;z-index:2">
+      <div class="kicker">Приложение для команд яхт</div>
+      <h1 class="h1"><span class="cy">DarDori.</span><br>Порядок на&nbsp;борту.</h1>
+      <p class="lead">Вся команда яхты — в&nbsp;одном приложении.</p>
+      <div class="badges" style="margin-top:34px">
+        <span class="badge">Android 8+</span>
+        <span class="badge">Бесплатно</span>
+        <span class="badge">Без платежей внутри</span>
+      </div>
+    </div>
+    <div class="phone" style="position:absolute;right:64px;bottom:170px;transform:rotate(-3deg)">
+      <div class="screen">
+        <div class="fb"><b>⛵</b><span>Флот DarDori</span></div>
+        <img src="assets/screen-fleet.png" alt="Экран «Флот»" onerror="this.style.display='none'">
+      </div>
+    </div>
+    <div class="wavebottom"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><use href="#i-waveshape" fill="rgba(53,196,255,.16)"/></svg></div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">1 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 2 · БОЛЬ ═══ -->
+<div class="shell" data-title="Боль высокого сезона">
+  <section class="slide dark storm">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="missed">📵 12 пропущенных · 3 чата · 1 блокнот</span>
+    </div>
+    <div class="kicker" style="color:#FFB3C2">Высокий сезон</div>
+    <h2 class="h2" style="font-size:76px">Суббота. Июль.<br>12 звонков.</h2>
+    <p class="lead" style="margin-bottom:36px">Три чата, блокнот и память.</p>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div class="bubble"><span class="who">Чат «Экипаж» · 13:42</span>«Кто подтвердил прогулку на&nbsp;14:00?»</div>
+      <div class="bubble me"><span class="who">Чат «Заказы» · 13:44</span>«Мы же уже взяли заказ на&nbsp;это время!»</div>
+    </div>
+    <p class="lead" style="margin-top:44px;color:#FFB3C2;font-weight:600">Клиент ждёт, команда спорит,<br>сезон уходит.</p>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">2 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 3 · ЦЕНА ХАОСА ═══ -->
+<div class="shell" data-title="Цена хаоса">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+    </div>
+    <div class="kicker">Что теряется</div>
+    <h2 class="h2">Хаос стоит денег.</h2>
+    <div style="display:flex;flex-direction:column;gap:26px;margin-top:10px">
+      <div class="card" style="display:flex;gap:28px;align-items:center">
+        <span class="icbox coral"><svg class="ic"><use href="#i-call"/></svg></span>
+        <div><h4 style="font-family:'Unbounded';font-size:36px;color:var(--navy)">Забытая бронь</h4><p class="body" style="color:var(--muted);margin-top:6px">Потерянный клиент.</p></div>
+      </div>
+      <div class="card" style="display:flex;gap:28px;align-items:center">
+        <span class="icbox amber"><svg class="ic"><use href="#i-cal"/></svg></span>
+        <div><h4 style="font-family:'Unbounded';font-size:36px;color:var(--navy)">Двойная запись</h4><p class="body" style="color:var(--muted);margin-top:6px">Испорченный день и репутация.</p></div>
+      </div>
+      <div class="card" style="display:flex;gap:28px;align-items:center">
+        <span class="icbox"><svg class="ic"><use href="#i-users"/></svg></span>
+        <div><h4 style="font-family:'Unbounded';font-size:36px;color:var(--navy)">Каждый заказ по телефону</h4><p class="body" style="color:var(--muted);margin-top:6px">Время всей команды.</p></div>
+      </div>
+    </div>
+    <div class="band" style="margin-top:48px">Проблема не в людях.<br>Информация разбросана.</div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">3 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 4 · РЕШЕНИЕ ═══ -->
+<div class="shell" data-title="Решение">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+    </div>
+    <div class="kicker">Решение</div>
+    <h2 class="h2">Одно окно для всей команды.</h2>
+    <p class="body" style="margin-bottom:40px">Флот, календарь занятости, заказы, роли и уведомления — в одном месте. Больше не нужно обсуждать каждый заказ со всей командой по телефону.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div class="card" style="display:flex;gap:22px;align-items:center"><span class="icbox"><svg class="ic"><use href="#i-anchor"/></svg></span><b style="font-family:'Unbounded';font-size:33px;color:var(--navy)">Флот</b></div>
+      <div class="card" style="display:flex;gap:22px;align-items:center"><span class="icbox teal"><svg class="ic"><use href="#i-cal"/></svg></span><b style="font-family:'Unbounded';font-size:33px;color:var(--navy)">Календарь</b></div>
+      <div class="card" style="display:flex;gap:22px;align-items:center"><span class="icbox green"><svg class="ic"><use href="#i-order"/></svg></span><b style="font-family:'Unbounded';font-size:33px;color:var(--navy)">Заказы</b></div>
+      <div class="card" style="display:flex;gap:22px;align-items:center"><span class="icbox gold"><svg class="ic"><use href="#i-users"/></svg></span><b style="font-family:'Unbounded';font-size:33px;color:var(--navy)">Роли</b></div>
+      <div class="card" style="grid-column:1/-1;display:flex;gap:22px;align-items:center;background:linear-gradient(120deg,var(--navy),var(--blue2));border:none">
+        <span class="icbox" style="background:rgba(53,196,255,.18);color:var(--cyan)"><svg class="ic"><use href="#i-bell"/></svg></span>
+        <b style="font-family:'Unbounded';font-size:33px;color:#fff">Уведомления — вся команда в курсе</b>
+      </div>
+    </div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">4 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 5 · СЦЕНАРИЙ 1 ═══ -->
+<div class="shell" data-title="Сценарий · звонок клиента">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip soon">Скоро</span>
+    </div>
+    <div class="kicker">Сценарий · 1 из 2</div>
+    <h2 class="h2">Клиент звонит — вы уже видите всё.</h2>
+    <p class="body" style="margin-bottom:36px">Открываете календарь и видите занятость яхты. Договариваетесь о прогулке и прямо во время разговора составляете заявку: дата, время, гости, маршрут.</p>
+    <div class="callbar" style="margin-bottom:26px">
+      <span class="pulse"><svg class="ic"><use href="#i-call"/></svg></span>
+      <div><b style="font-size:32px;color:var(--navy)">Входящий · клиент</b><p class="small">+7 900 000-00-00 · демо</p></div>
+      <span class="chip done" style="margin-left:auto">Календарь открыт</span>
+    </div>
+    <div class="card">
+      <div class="cal">
+        <span></span><span class="h">Пн</span><span class="h">Вт</span><span class="h">Ср</span><span class="h">Чт</span><span class="h">Пт</span><span class="h">Сб</span><span class="h">Вс</span>
+        <span class="t">10:00</span><span class="cell"></span><span class="cell busy">2 ч</span><span class="cell"></span><span class="cell"></span><span class="cell busy">3 ч</span><span class="cell busy">4 ч</span><span class="cell busy">2 ч</span>
+        <span class="t">12:00</span><span class="cell"></span><span class="cell"></span><span class="cell busy">2 ч</span><span class="cell"></span><span class="cell"></span><span class="cell busy">3 ч</span><span class="cell busy">4 ч</span>
+        <span class="t">14:00</span><span class="cell busy">2 ч</span><span class="cell"></span><span class="cell"></span><span class="cell busy">2 ч</span><span class="cell"></span><span class="cell new">заявка</span><span class="cell busy">2 ч</span>
+        <span class="t">16:00</span><span class="cell"></span><span class="cell busy">3 ч</span><span class="cell"></span><span class="cell"></span><span class="cell busy">2 ч</span><span class="cell busy">2 ч</span><span class="cell"></span>
+      </div>
+    </div>
+    <p style="margin-top:22px"><span class="schemtag">Схема раздела · в разработке</span></p>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">5 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 6 · СЦЕНАРИЙ 2 ═══ -->
+<div class="shell" data-title="Сценарий · команда в курсе">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip soon">Скоро</span>
+    </div>
+    <div class="kicker">Сценарий · 2 из 2</div>
+    <h2 class="h2">Заявка готова — команда в курсе.</h2>
+    <p class="body" style="margin-bottom:34px">Приложение рассчитывает рекомендательную цену. Все участники получают уведомление о новой заявке. Клиент оплатил бронь — вы ставите галочку «Бронь», и все исполнители оповещены.</p>
+    <div class="card" style="display:flex;align-items:center;gap:24px">
+      <span class="icbox green"><svg class="ic"><use href="#i-order"/></svg></span>
+      <div><b style="font-size:32px;color:var(--navy)">Заявка № 128 · «Мечта»</b><p class="small">Завтра 14:00 · 2 часа · 6 гостей · демо</p></div>
+      <span style="margin-left:auto;font-family:'Unbounded';font-size:34px;color:var(--blue);white-space:nowrap">≈ 12 400 ₽</span>
+    </div>
+    <div class="flowarrow">↓</div>
+    <div class="rolefan">
+      <span class="rolepill"><svg><use href="#i-bell"/></svg>Судовладелец</span>
+      <span class="rolepill"><svg><use href="#i-bell"/></svg>Капитан</span>
+      <span class="rolepill"><svg><use href="#i-bell"/></svg>Помощник</span>
+      <span class="rolepill"><svg><use href="#i-bell"/></svg>Брокер</span>
+    </div>
+    <div class="flowarrow">↓</div>
+    <div class="togglecard">
+      <span class="tick"><svg class="ic" style="width:40px;height:40px"><use href="#i-check"/></svg></span>
+      <div><b style="font-size:33px;color:#14532D">Бронь подтверждена</b><p class="small" style="color:#3F6212">Все исполнители оповещены</p></div>
+    </div>
+    <p style="margin-top:22px"><span class="schemtag">Схема раздела · в разработке</span></p>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">6 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 7 · ЖИЗНЕННЫЙ ЦИКЛ ═══ -->
+<div class="shell" data-title="Жизненный цикл заказа">
+  <section class="slide dark">
+    <svg class="compass" style="bottom:140px;right:-110px"><use href="#i-compass"/></svg>
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip soon">Скоро</span>
+    </div>
+    <div class="kicker">Жизненный цикл заказа</div>
+    <h2 class="h2">Приложение ведёт заказ до конца.</h2>
+    <div class="route">
+      <div class="node"><h4>Заявка</h4><p>команда уведомлена</p></div>
+      <div class="node"><h4>Бронь</h4><p>галочка — все исполнители оповещены</p></div>
+      <div class="node"><h4>За день</h4><p>напоминание команде</p></div>
+      <div class="node"><h4>За 3 часа</h4><p>напоминание команде</p></div>
+      <div class="node g"><h4>Старт</h4><p>прогулка началась</p></div>
+      <div class="node y"><h4>Финиш</h4><p>заказ исполнен</p></div>
+      <div class="node b"><h4>История</h4><p>данные для любых отчётов</p></div>
+    </div>
+    <p class="lead" style="margin-top:40px;font-weight:600">Никто ничего не забудет —<br>даже в пик сезона.</p>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">7 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 8 · ЦЕНА ═══ -->
+<div class="shell" data-title="Рекомендательная цена">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip soon">Скоро</span>
+    </div>
+    <div class="kicker">Рекомендательная цена</div>
+    <h2 class="h2">Цена, которая думает.</h2>
+    <p class="body" style="margin-bottom:34px">Рекомендация учитывает сезон, день недели, время суток, длительность прогулки, число гостей и то, насколько заранее бронируют.</p>
+    <div class="pricecard" style="margin-bottom:30px">
+      <span class="rub"><svg class="ic"><use href="#i-ruble"/></svg></span>
+      <div><b style="font-family:'Unbounded';font-size:38px">Рекомендация</b><p style="font-size:28px;color:#B9CCE8;margin-top:6px">рассчитывается онлайн при создании заявки</p></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px">
+      <span class="factor"><svg><use href="#i-sun"/></svg>Сезон</span>
+      <span class="factor"><svg><use href="#i-cal"/></svg>День недели</span>
+      <span class="factor"><svg><use href="#i-clock"/></svg>Время суток</span>
+      <span class="factor"><svg><use href="#i-clock"/></svg>Длительность</span>
+      <span class="factor"><svg><use href="#i-users"/></svg>Гости</span>
+      <span class="factor"><svg><use href="#i-flag"/></svg>Горизонт брони</span>
+    </div>
+    <div class="band">Рекомендует приложение — решаете вы.<br>Денег внутри приложения нет.</div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">8 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 9 · РОЛИ ═══ -->
+<div class="shell" data-title="Роли на яхте">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+    </div>
+    <div class="kicker">Роли</div>
+    <h2 class="h2">Каждому — своё.</h2>
+    <div style="display:flex;flex-direction:column;gap:26px;margin-top:8px">
+      <div class="rolecard" style="border-left-color:var(--blue)">
+        <span class="icbox"><svg class="ic"><use href="#i-anchor"/></svg></span>
+        <div><h4>Судовладелец</h4><p>Видит всё: флот, заказы, команду, отчёты.</p></div>
+      </div>
+      <div class="rolecard" style="border-left-color:var(--cyan)">
+        <span class="icbox teal"><svg class="ic"><use href="#i-boat"/></svg></span>
+        <div><h4>Капитан</h4><p>Расписание, заказы, готовность яхты.</p></div>
+      </div>
+      <div class="rolecard" style="border-left-color:var(--teal)">
+        <span class="icbox green"><svg class="ic"><use href="#i-check"/></svg></span>
+        <div><h4>Помощник капитана</h4><p>Задачи и детали исполнения.</p></div>
+      </div>
+      <div class="rolecard" style="border-left-color:var(--gold)">
+        <span class="icbox gold"><svg class="ic"><use href="#i-ruble"/></svg></span>
+        <div><h4>Брокер</h4><p>Заявки и цены, без лишнего доступа.</p></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:36px">Состав команды настраивается под любое плавсредство — от резиновой лодки до чартерной яхты.</p>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">9 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 10 · ФЛОТ ═══ -->
+<div class="shell" data-title="Флот">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip done">Готово</span>
+    </div>
+    <div class="kicker">Флот</div>
+    <h2 class="h2" style="font-size:56px">От резиновой лодки до чартерной яхты.</h2>
+    <p class="body" style="margin-bottom:30px">Карточки яхт, локации и категории. Фото с обработкой: водяной знак и размытие лиц. Готовые карточки яхт и заказов — для пересылки в мессенджеры.</p>
+    <div style="display:flex;gap:40px;align-items:flex-start">
+      <div class="phone" style="width:400px">
+        <div class="screen">
+          <div class="fb"><b>⛵</b><span>Карточка яхты</span></div>
+          <img src="assets/screen-yacht.png" alt="Карточка яхты" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;flex:1">
+        <span class="factor"><svg><use href="#i-pin"/></svg>Локации</span>
+        <span class="factor"><svg><use href="#i-order"/></svg>Категории</span>
+        <span class="factor"><svg><use href="#i-camera"/></svg>Водяной знак</span>
+        <span class="factor"><svg><use href="#i-eye"/></svg>Размытие лиц</span>
+        <span class="factor"><svg><use href="#i-share"/></svg>Карточки в мессенджеры</span>
+      </div>
+    </div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">10 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 11 · КОМАНДА ═══ -->
+<div class="shell" data-title="Команда и приглашения">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip wip">В работе</span>
+    </div>
+    <div class="kicker">Команда</div>
+    <h2 class="h2" style="font-size:56px">Команда собирается в пару касаний.</h2>
+    <p class="body" style="margin-bottom:30px">Приглашения через QR, мессенджеры, email и внутреннее сообщество. Одноразовые коды, правила доступа, поиск кандидатов среди профессионалов.</p>
+    <div style="display:flex;gap:40px;align-items:flex-start">
+      <div class="phone" style="width:400px">
+        <div class="screen">
+          <div class="fb"><b>⛵</b><span>QR-приглашение</span></div>
+          <img src="assets/screen-qr.png" alt="QR-приглашение" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;flex:1">
+        <span class="factor"><svg><use href="#i-qr"/></svg>QR-код</span>
+        <span class="factor"><svg><use href="#i-msg"/></svg>Мессенджеры</span>
+        <span class="factor"><svg><use href="#i-mail"/></svg>Email</span>
+        <span class="factor"><svg><use href="#i-users"/></svg>Сообщество</span>
+        <div class="card" style="padding:24px 28px;margin-top:8px"><p class="small">Код одноразовый и действует 3 дня. В QR — только код приглашения, без персональных данных.</p></div>
+      </div>
+    </div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">11 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 12 · ОТЧЁТЫ ═══ -->
+<div class="shell" data-title="История и отчёты">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip soon">Скоро</span>
+    </div>
+    <div class="kicker">История и отчёты</div>
+    <h2 class="h2">Каждая прогулка — в истории.</h2>
+    <p class="body" style="margin-bottom:30px">Исполненные заказы уходят в историю. Отчёты по яхте и периоду: сколько прогулок, когда, на каких условиях. Полный учёт почасовых прогулок.</p>
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <b style="font-family:'Unbounded';font-size:32px;color:var(--navy)">«Мечта» · Июль 2026</b>
+        <span class="schemtag">Схема отчёта · демо</span>
+      </div>
+      <div class="bars">
+        <div class="bar" style="height:34%;background:linear-gradient(180deg,#35C4FF,#0072FF)"><b>2</b><span>Пн</span></div>
+        <div class="bar" style="height:46%;background:linear-gradient(180deg,#0FB5C9,#0A4FA8)"><b>3</b><span>Вт</span></div>
+        <div class="bar" style="height:40%;background:linear-gradient(180deg,#22C55E,#0FB5C9)"><b>3</b><span>Ср</span></div>
+        <div class="bar" style="height:58%;background:linear-gradient(180deg,#FFC24B,#FFB020)"><b>4</b><span>Чт</span></div>
+        <div class="bar" style="height:72%;background:linear-gradient(180deg,#0072FF,#123B7A)"><b>5</b><span>Пт</span></div>
+        <div class="bar" style="height:100%;background:linear-gradient(180deg,#35C4FF,#0072FF)"><b>7</b><span>Сб</span></div>
+        <div class="bar" style="height:66%;background:linear-gradient(180deg,#FF4D6D,#C2185B)"><b>4</b><span>Вс</span></div>
+      </div>
+      <div class="sumrow">
+        <div class="sum"><b>24</b><span>прогулки</span></div>
+        <div class="sum"><b>96</b><span>часов</span></div>
+        <div class="sum"><b>148</b><span>гостей</span></div>
+      </div>
+    </div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">12 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 13 · БЕЗОПАСНОСТЬ ═══ -->
+<div class="shell" data-title="Безопасность и 152-ФЗ">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+    </div>
+    <div class="kicker">Безопасность</div>
+    <h2 class="h2">Данные — под защитой.</h2>
+    <div style="display:flex;gap:40px;align-items:flex-start">
+      <div style="flex:1;display:flex;flex-direction:column;gap:24px">
+        <div class="card" style="display:flex;gap:22px;align-items:flex-start;padding:26px 28px">
+          <span class="icbox green" style="width:70px;height:70px"><svg class="ic" style="width:36px;height:36px"><use href="#i-shield"/></svg></span>
+          <p class="body" style="font-size:31px"><b>152-ФЗ:</b> согласия, анонимизация, маскирование данных в логах.</p>
+        </div>
+        <div class="card" style="display:flex;gap:22px;align-items:flex-start;padding:26px 28px">
+          <span class="icbox" style="width:70px;height:70px"><svg class="ic" style="width:36px;height:36px"><use href="#i-lock"/></svg></span>
+          <p class="body" style="font-size:31px"><b>Ролевой доступ:</b> каждый видит только своё.</p>
+        </div>
+        <div class="card" style="display:flex;gap:22px;align-items:flex-start;padding:26px 28px">
+          <span class="icbox teal" style="width:70px;height:70px"><svg class="ic" style="width:36px;height:36px"><use href="#i-ruble"/></svg></span>
+          <p class="body" style="font-size:31px"><b>Никаких финансовых операций.</b> Бесплатно — без скрытых платежей.</p>
+        </div>
+        <div class="card" style="display:flex;gap:22px;align-items:flex-start;padding:26px 28px">
+          <span class="icbox gold" style="width:70px;height:70px"><svg class="ic" style="width:36px;height:36px"><use href="#i-eye"/></svg></span>
+          <p class="body" style="font-size:31px"><b>Фото:</b> водяной знак, размытие лиц, удаление EXIF.</p>
+        </div>
+      </div>
+      <div class="phone" style="width:380px">
+        <div class="screen">
+          <div class="fb"><b>⛵</b><span>Согласия при регистрации</span></div>
+          <img src="assets/screen-register.png" alt="Регистрация и согласия" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">13 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 14 · ЧЕСТНЫЙ СТАТУС ═══ -->
+<div class="shell" data-title="Честный статус проекта">
+  <section class="slide">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip beta">Бета</span>
+    </div>
+    <div class="kicker">Прогресс разработки</div>
+    <h2 class="h2">Честный статус проекта.</h2>
+    <div class="card" style="padding:26px 32px">
+      <div class="statrow"><span class="chip done">Готово</span><span class="txt"><b>Вход и профиль</b> · раздел <b>«Яхта»</b></span></div>
+      <div class="statrow"><span class="chip wip">В работе</span><span class="txt"><b>Команда:</b> роли, приглашения, QR-коды</span></div>
+      <div class="statrow"><span class="chip soon">Скоро</span><span class="txt">Календарь · заказы · цена · уведомления · push · отчёты · настройки · документы · сообщество</span></div>
+      <div class="statrow"><span class="chip soon">Скоро</span><span class="txt"><b>Инфраструктура:</b> перенос базы данных на российский сервер</span></div>
+    </div>
+    <div style="display:flex;gap:34px;align-items:center;margin-top:34px">
+      <div class="launchband" style="flex:1">
+        <span style="font-size:52px">🚀</span>
+        <div><b>Ориентир: 15 апреля 2027</b><span>Дата предварительная и может сдвинуться</span></div>
+      </div>
+      <div class="qr-tile" style="padding:16px">
+        <img style="width:210px;height:210px" alt="QR: сайт DarDori" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASIAAAEiAQMAAABncE31AAAABlBMVEUKHjz///9hb9JBAAABU0lEQVR42u1aSRLDIAzzNA/wk/g6T+oDmKGAF8gtPdiHVhwySfBJVoRQoP5gVEIVqn6t6k06itxdncqYsrfXqHrRk4Gq76om9pf0YWEvrShvbYDMAvtA7JXt0oVGwvtiXQD2Cdgf5L+AfTrvReCBfbreD7kx5Yfe52C/fY6RX78A+Jxo7I/RDqN5OlHgFag51ThOxLcFF7yP5f1Q+crzsoRnkl8QX/MM3sdqzok425bWyQ/sY9da7m521N2Mdw1rbYa/5277WrtoP8D7aN6Lvix/P+/qXoSh9xmasxtg21z4+xyPuTjezNj4IzKF+EzhiHJUc7bdB/YJ+9odntFtwQX2CXnOpDz3I9SBz0nQHI/uq7t6nwD2sf7+nt+73gP7VOzF7OiPQ3U8wCsc+3U6gW2D1eHvE/XeA7UuZ0SQISf6nJ3nEOkvRPicHH+Ps2So+pOqD7Dwp7ttxmXFAAAAAElFTkSuQmCC">
+        <b style="font-size:24px">Шкала на сайте</b>
+      </div>
+    </div>
+    <p class="small" style="margin-top:24px">Шкала обновляется на сайте — следите за прогрессом.</p>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">14 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 15 · ПЛАНЫ ═══ -->
+<div class="shell" data-title="Планы развития">
+  <section class="slide dark horizon">
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+    </div>
+    <div class="kicker">Горизонт</div>
+    <h2 class="h2">Дальше — больше.</h2>
+    <div style="display:flex;flex-direction:column;gap:26px;margin-top:10px">
+      <div class="mile"><span class="n">1</span><div><h4>Клиентский раздел</h4><p>Поиск яхт и заказ без долгих переговоров — когда в системе будет достаточно плавсредств.</p></div></div>
+      <div class="mile" style="margin-left:40px"><span class="n">2</span><div><h4>Оплата внутри платформы</h4><p>Прозрачные расчёты внутри системы — на следующем этапе.</p></div></div>
+      <div class="mile" style="margin-left:80px"><span class="n">3</span><div><h4>Экосистема яхтенного туризма России</h4><p>Сообщество профессионалов, сервисы и данные в одном месте.</p></div></div>
+      <div class="mile" style="margin-left:120px"><span class="n">4</span><div><h4>Управление портами маломерного туризма</h4><p>Инфраструктура для стоянок и выходов на воду.</p></div></div>
+    </div>
+    <div class="wavebottom"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><use href="#i-waveshape" fill="rgba(53,196,255,.2)"/></svg></div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">15 / 16</span></div>
+  </section>
+</div>
+
+<!-- ═══ СЛАЙД 16 · ФИНАЛ ═══ -->
+<div class="shell" data-title="Присоединяйтесь">
+  <section class="slide dark">
+    <svg class="compass" style="top:110px;right:-100px"><use href="#i-compass"/></svg>
+    <div class="head">
+      <div class="brandrow">
+        <span class="logotile">⛵<img src="assets/logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="wordmark">DarDori</span>
+      </div>
+      <span class="chip beta">Закрытое тестирование</span>
+    </div>
+    <h2 class="h2" style="font-size:58px;max-width:860px">DarDori делает один человек. Бесплатно. Для своих.</h2>
+    <p class="lead" style="margin-bottom:40px">Сообщество профессионалов яхтенного туризма России. Присоединяйтесь!</p>
+    <div style="display:flex;gap:36px;margin-bottom:40px">
+      <div class="qr-tile">
+        <img alt="QR: сайт DarDori" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASIAAAEiAQMAAABncE31AAAABlBMVEUKHjz///9hb9JBAAABU0lEQVR42u1aSRLDIAzzNA/wk/g6T+oDmKGAF8gtPdiHVhwySfBJVoRQoP5gVEIVqn6t6k06itxdncqYsrfXqHrRk4Gq76om9pf0YWEvrShvbYDMAvtA7JXt0oVGwvtiXQD2Cdgf5L+AfTrvReCBfbreD7kx5Yfe52C/fY6RX78A+Jxo7I/RDqN5OlHgFag51ThOxLcFF7yP5f1Q+crzsoRnkl8QX/MM3sdqzok425bWyQ/sY9da7m521N2Mdw1rbYa/5277WrtoP8D7aN6Lvix/P+/qXoSh9xmasxtg21z4+xyPuTjezNj4IzKF+EzhiHJUc7bdB/YJ+9odntFtwQX2CXnOpDz3I9SBz0nQHI/uq7t6nwD2sf7+nt+73gP7VOzF7OiPQ3U8wCsc+3U6gW2D1eHvE/XeA7UuZ0SQISf6nJ3nEOkvRPicHH+Ps2So+pOqD7Dwp7ttxmXFAAAAAElFTkSuQmCC">
+        <b>Сайт и установка</b><span>dardori.github.io</span>
+      </div>
+      <div class="qr-tile">
+        <img alt="QR: канал MAX" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQMAAABB54RGAAAABlBMVEUKHjz///9hb9JBAAABo0lEQVR42u2by23EMAxEibgAl5TWVdIWIECR+Rf2sgESYA6jg7C2edKDyOFIK+vTMYShDGXor0Jf4uN7v7CpHn1cO/RLPh4M/Z/Qh9Zl5DaeKWvcDlIZKTILIS0UWk5m77JNa/qkH553eyItPFqxo3yQFvre8mnnRC9jpIVat4LbFh9iFYx1C45WakJLfcdETQhG6xhRtzwTdrHPxYKg1fWfykHX8poOU8aTFhQtJ6PI8sNgJoSrW5b65HbzIgRG77xIC0fBq0Z3vfGQaS2yp0PSwsmEmgS9RZ7+YSQ37i2sfmtkThx3NzRKy5MWTr/Ve6tIh9Y250RaOLRUGLacmJvunqxbeHUrvYxSgkaQzhOegs/DEn88LXnSQnKe7Gc5GK1khdQgLRyfsFwmsbPjTIJ5nkxaQJnw6if9ri3k6Ly4WFgefHkZyWix38JT8FW3Tt0elhRpIXkZb3eeZrbIWdq4WGD3MiL1pRtfHhRpwd15Ct9ixT3QEB2khUmrn0FWN8a6hVe3XgUvjCihTwirCVfTG3VCyUwI2W/xLx4MZeifhf4AlPAxrvdb8+wAAAAASUVORK5CYII=">
+        <b>Канал в MAX</b><span>Новости разработки</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:44px">
+      <div class="contactrow"><svg><use href="#i-msg"/></svg>Telegram (зеркало): t.me/dardori_app</div>
+      <div class="contactrow"><svg><use href="#i-mail"/></svg>dardoricompany@gmail.com</div>
+      <div class="contactrow"><svg><use href="#i-ruble"/></svg>Поддержать разработку — по желанию, ссылка на сайте</div>
+    </div>
+    <div class="signoff">Одно море. Много историй.</div>
+    <div class="wavebottom"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><use href="#i-waveshape" fill="rgba(53,196,255,.16)"/></svg></div>
+    <div class="foot"><span class="fbrand"><svg><use href="#i-wave"/></svg>dardori.github.io</span><span class="fnum">16 / 16</span></div>
+  </section>
+</div>
+
+</main>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var shells=[].slice.call(document.querySelectorAll('.shell'));
+  var sel=document.getElementById('jump');
+  shells.forEach(function(s,i){
+    var o=document.createElement('option');
+    o.value=i;o.textContent=(i+1)+' · '+s.getAttribute('data-title');
+    sel.appendChild(o);
+  });
+  function fit(){
+    var s=Math.min(1,(window.innerWidth-28)/1080);
+    document.documentElement.style.setProperty('--s',s);
+  }
+  window.addEventListener('resize',fit);fit();
+  sel.addEventListener('change',function(){
+    shells[+sel.value].scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  function current(){
+    var best=0,bd=1e9;
+    shells.forEach(function(s,i){
+      var d=Math.abs(s.getBoundingClientRect().top-90);
+      if(d<bd){bd=d;best=i;}
+    });
+    return best;
+  }
+  window.addEventListener('keydown',function(e){
+    var t=e.target;
+    if(t&&(t.tagName==='SELECT'||t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;
+    var i=current();
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();shells[Math.min(i+1,shells.length-1)].scrollIntoView({behavior:'smooth',block:'start'});}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();shells[Math.max(i-1,0)].scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});
+    },{threshold:0.06});
+    shells.forEach(function(s){io.observe(s);});
+  }else{
+    shells.forEach(function(s){s.classList.add('in');});
+  }
+  var pb=document.getElementById('pbar');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    pb.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+  },{passive:true});
+  var btn=document.getElementById('printBtn');
+  btn.addEventListener('click',function(){
+    btn.disabled=true;var old=btn.textContent;btn.textContent='Готовим…';
+    var fonts=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve();
+    var imgs=[].slice.call(document.images).map(function(im){
+      return im.decode?im.decode().catch(function(){}):Promise.resolve();
+    });
+    function done(){btn.disabled=false;btn.textContent=old;window.print();}
+    Promise.all([fonts].concat(imgs)).then(done,done);
+  });
+})();
+</script>
+</body>
+</html>
