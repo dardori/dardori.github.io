@@ -346,7 +346,9 @@ footer a{color:var(--blue);text-decoration:none}
   <div class="btns">
     <a class="btn" href="https://max.ru/channel_dardori" target="_blank" rel="noopener">📣 Канал в MAX — основной</a>
     <a class="btn ghost" href="https://t.me/dardori_app" target="_blank" rel="noopener">✈️ Мы также в Telegram</a>
-    <p class="note">Telegram в России может потребовать VPN. Основной канал — в MAX.</p>
+    <a class="btn ghost" href="https://t.me/dardori_chat" target="_blank" rel="noopener">💬 Чат сообщества в Telegram</a>
+    <p class="note">Telegram Основной канал — в MAX.</p>
+    <a class="btn" id="supportMail" href="#">✉️ Написать в поддержку</a>
     <a class="btn ghost" id="presLink" href="presentation.html">📄 Презентация проекта <span id="presChip" class="st soon">скоро</span></a>
     <p style="margin-top:14px">Почта: <a class="email-link" href="#">почта</a></p>
   </div>
@@ -379,6 +381,10 @@ document.getElementById('releasesLink').href = REPO_URL + '/releases';
 /* ═══ Почта собирается скриптом — спамеры не найдут её в HTML ═══ */
 const email = EMAIL_USER + '@' + EMAIL_DOMAIN;
 document.querySelectorAll('.email-link').forEach(a => { a.href = 'mailto:' + email; a.textContent = email; });
+const supportMail = document.getElementById('supportMail');
+if (supportMail) {
+  supportMail.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Поддержка DarDori');
+}
 
 /* ═══ Кнопка скачивания: сама активируется после первого релиза ═══ */
 const btn = document.getElementById('downloadBtn');
