@@ -373,6 +373,14 @@ document.querySelectorAll('.email-link').forEach(a => { a.href = 'mailto:' + ema
 /* ═══ Кнопка скачивания: сама активируется после первого релиза ═══ */
 const btn = document.getElementById('downloadBtn');
 const meta = document.getElementById('releaseMeta');
+
+/* Цель Метрики "Скачивание APK". Замени 12345678 на номер счётчика.
+   Срабатывает только когда кнопка реально ведёт на APK (не на "скоро"). */
+btn.addEventListener('click', function () {
+  if (typeof ym === 'function' && !btn.classList.contains('btn-soon')) {
+    ym(12345678, 'reachGoal', 'download_apk');
+  }
+});
 fetch('https://api.github.com/repos/' + GH_USER + '/' + GH_REPO + '/releases/latest')
   .then(r => {
     if (r.status === 404) {
@@ -418,6 +426,17 @@ const done = app.querySelectorAll('.st.done').length;
 const wip = app.querySelectorAll('.st.wip').length;
 const total = app.querySelectorAll('li').length;
 document.getElementById('rmCount').textContent = 'Готово ' + done + ' из ' + total + ' разделов · в работе ' + wip;
+</script>
+
+<!-- Уведомление об аналитике -->
+<div id="cookieNote" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:99;background:#0A1E3C;color:#D7E6FA;border-radius:14px;padding:14px 16px;font-size:13px;box-shadow:0 8px 30px rgba(0,0,0,.35);max-width:720px;margin:0 auto">
+  Сайт собирает обезличенную статистику посещений через Яндекс.Метрику (данные хранятся в России). Мы не получаем и не храним ваши IP-адреса и персональные данные. Подробнее — в <a href="privacy.html" style="color:#35C4FF">политике конфиденциальности</a>.
+  <button onclick="document.getElementById('cookieNote').style.display='none';localStorage.setItem('cookieOk','1')" style="margin-left:10px;background:#0072FF;color:#fff;border:none;border-radius:8px;padding:6px 14px;font-weight:600;cursor:pointer">ОК</button>
+</div>
+<script>
+if (!localStorage.getItem('cookieOk')) {
+  document.getElementById('cookieNote').style.display = 'block';
+}
 </script>
 </body>
 </html>
